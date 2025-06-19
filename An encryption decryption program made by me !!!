@@ -1,0 +1,64 @@
+import random
+import string
+import sys
+import time
+
+# Global variables
+chars = " " + string.punctuation + string.digits + string.ascii_letters
+chars = list(chars)
+key = chars.copy()
+random.shuffle(key)
+
+def encrypt(plain_text):
+    cipher_text = ""
+    for char in plain_text:
+        if char in chars:
+            i = chars.index(char)
+            cipher_text += key[i]
+        else:
+            cipher_text += char
+    return cipher_text
+
+def decrypt(cipher_text):
+    plain_text = ""
+    for char in cipher_text:
+        if char in key:
+            i = key.index(char)
+            plain_text += chars[i]
+        else:
+            plain_text += char
+    return plain_text
+
+def exit_program():
+    sys.exit()
+
+def main():
+    while True:
+        print('''
+        **********
+        
+        1) Encrypt
+        2) Decrypt
+        3) Exit
+        
+        **********
+        ''')
+        choice = input("Enter your choice ! : ")
+        if choice == "1":
+            plain_text = input("Enter the text to encrypt : ")
+            encrypted = encrypt(plain_text)
+            print(encrypted)
+            time.sleep(2)
+        elif choice == "2":
+            cipher_text = input("Enter the text to decrypt : ")
+            decrypted = decrypt(cipher_text)
+            print(decrypted)
+            time.sleep(2)
+        elif choice == "3":
+            exit_program()
+        else:
+            print("Invalid choice! ")
+            continue
+
+if __name__ == "__main__":
+    main()

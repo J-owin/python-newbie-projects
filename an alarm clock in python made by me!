@@ -1,0 +1,39 @@
+import time
+import datetime
+import pygame
+
+def set_alarm(alarmtime):
+    print(f"Alarm has been set for {alarmtime}")
+    fp = "C:\\Users\\itsjo\\PycharmProjects\\script1\\.venv\\Kendrick Lamar, SZA - All The Stars (Lyrics).mp3"
+    is_running = True
+
+    while is_running:
+        current_time = datetime.datetime.now().strftime("%H:%M:%S")
+        print(current_time, end="\r", flush=True)
+
+        if current_time == alarmtime:
+            print("\nWake up!")
+            pygame.mixer.init()
+            pygame.mixer.music.load(fp)
+            pygame.mixer.music.play(-1)
+
+            while True:
+                action = input("Enter 's' to snooze for 5 minutes or 'q' to stop: ").lower()
+                if action == 's':
+                    pygame.mixer.music.stop()
+                    new_alarm = datetime.datetime.now() + datetime.timedelta(minutes=5)
+                    alarmtime = new_alarm.strftime("%H:%M:%S")
+                    print(f"Snoozed for 5 minutes! New alarm time: {alarmtime}")
+                    break
+                elif action == 'q':
+                    pygame.mixer.music.stop()
+                    print("Alarm stopped.")
+                    is_running = False
+                    break
+                else:
+                    print("Invalid input. Please enter 's' or 'q'.")
+        time.sleep(1)
+
+if __name__ == "__main__":
+    alarmtime = input("Enter the alarm time! (HH:MM:SS) : ")
+    set_alarm(alarmtime)

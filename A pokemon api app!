@@ -1,0 +1,31 @@
+import requests
+
+base_url ="https://pokeapi.co/api/v2/"
+
+def get_poke_info(name):
+    url = f"{base_url}/pokemon/{name}"
+    response = requests.get(url)
+
+
+    if response.status_code == 200:
+       poke_data = response.json()
+       return poke_data
+
+    else:
+        print(f"Failed to retrieve data {response.status_code}")
+while True:
+    poke_name = input("Enter a pokemon : ")
+    poke_info = get_poke_info(poke_name)
+    if poke_info:
+        while True:
+            attribute = input("Enter the attribute u want to check (name,height,weight,id,etc) : ")
+            print(f"{attribute.capitalize()} : {poke_info[attribute]}")
+            cont = input("Do you wish to continue? (y/n) : ").lower()
+            if cont == "n":
+                break
+    ch = input("Do you want to lookup another pokemon? (y/n) : ").lower()
+    if ch =="n":
+        break
+
+
+
